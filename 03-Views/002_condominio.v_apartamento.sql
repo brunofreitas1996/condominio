@@ -1,7 +1,7 @@
 -- condominio.v_apartamento.sql
 create or replace view condominio.v_apartamento as
 select 
-     , apartamento_id
+       apartamento_id
      , bloco_id
      , nr_andar
      , nr_apartamento
