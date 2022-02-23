@@ -5,6 +5,6 @@ select
      , bloco_id
      , nr_andar
      , nr_apartamento
-     , tp_generico_id
+     , tp_tab_generica_id
      , dt_insert
  from condominio.apartamento;

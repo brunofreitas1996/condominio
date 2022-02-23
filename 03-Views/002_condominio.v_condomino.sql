@@ -7,6 +7,6 @@ select
      , dt_inicio
      , dt_fim
      , vl_porcent
-     , tp_dond_tab_generica
+     , tp_tab_generica_id
      , dt_insert
   from condominio.condomino;

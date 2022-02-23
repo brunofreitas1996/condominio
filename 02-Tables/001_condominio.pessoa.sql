@@ -3,7 +3,7 @@
 create table condominio.pessoa (
         pessoa_id     integer
       , nome          varchar2(100)
-      , nr_cad_unico  varchar2(30)
+      , nr_cad_unico  varchar2(30) unique
       , dt_nascimento date
       , dt_insert     date default sysdate
 );
