@@ -1,13 +1,14 @@
 from tkinter import *
-import BDconection as bds
+from tkinter import messagebox
+from BDconection import *
 from Colors import *
 
 
 root = Tk()
-class bd():
-    def insUsuario(self):
+
+class Banco(banco_de_dados):
+    def insereUsuario(self):
         print("Cadastrando usuario")
-        self.bds = self.conecta_bd()
         self.nome = self.innome.get()
         self.nrcad = self.innrcad.get()
         self.dtnas = self.indtnasc.get()
@@ -16,14 +17,22 @@ class bd():
         print(self.nrcad)
         print(self.dtnas)
         print(self.senha)
+        self.insUsuario(self.nome, self.nrcad, self.dtnas, self.senha)
+    def valLogin(self):
+        print("Valida login")
+        self.user  = self.username.get()
+        self.senha = self.password.get()
 
-        #bds.insUsuario(self.nome, self.nrcad, self.dtnas, self.senha)
-        #bds.conecta_bd().conn.commit()
-        self.bds.desconecta_bd()
+        self.resultado = self.validaLogin(self.user, self.senha)
 
-
-
-class Application(Colors, bd):
+        if self.resultado == 0:
+            messagebox.showinfo("Alerta!", "Acesso Negado: Usuário incorreto.")
+        elif self.resultado == 1:
+            messagebox.showinfo("Info!", "Acesso Liberado...")
+        elif self.resultado == 9:
+            messagebox.showinfo("Alerta!", "Acesso Negado: Senha Incorreta.")
+            
+class Application(Colors, Banco):
     def __init__(self):
         self.root = root
         self.configTela()
@@ -63,7 +72,7 @@ class Application(Colors, bd):
 
         self.btnCadastro = Button(master=self.frlogin,bd=0, text='Cadastrar',font=5, fg=self.fgText,bg=self.bg, width=10, command=self.Cadastro)
         self.btnCadastro.place(relx=0.10, rely=0.59)
-        self.btnLogar = Button(master=self.frlogin,bd=0, text='Entrar',font=5, fg=self.fgText, bg=self.bg, width=10)
+        self.btnLogar = Button(master=self.frlogin,bd=0, text='Entrar',font=5, fg=self.fgText, bg=self.bg, width=10, command=self.valLogin)
         self.btnLogar.place(relx=0.54, rely=0.59)
 
         self.recuperarsenha = Label(master=self.frlogin, text='Recuperar senha', bg=self.bg1, fg=self.fgText)
@@ -114,7 +123,7 @@ class Application(Colors, bd):
 
         self.btnVoltar = Button(master=self.frcadastro,bd=0, text='Voltar',font=5, fg=self.fgText,bg=self.bg, width=10, command=voltalogin)
         self.btnVoltar.place(relx=0.10, rely=0.59)
-        self.btnCadastrar = Button(master=self.frcadastro,bd=0, text='Cadastrar',font=5, fg=self.fgText, bg=self.bg, width=10, command=self.insUsuario)
+        self.btnCadastrar = Button(master=self.frcadastro,bd=0, text='Cadastrar',font=5, fg=self.fgText, bg=self.bg, width=10, command=self.insereUsuario)
         self.btnCadastrar.place(relx=0.54, rely=0.59)
 
         self.lblDuvida = Label(master=self.frcadastro, text='Dúvidas', bg=self.bg1, fg=self.fgText)
