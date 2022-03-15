@@ -3,7 +3,6 @@ from tkinter import messagebox
 from BDconection import *
 from Colors import *
 
-
 root = Tk()
 
 class Banco(banco_de_dados):
@@ -13,11 +12,11 @@ class Banco(banco_de_dados):
         self.nrcad = self.innrcad.get()
         self.dtnas = self.indtnasc.get()
         self.senha = self.insenha.get()
-        print(self.nome)
-        print(self.nrcad)
-        print(self.dtnas)
-        print(self.senha)
+
         self.insUsuario(self.nome, self.nrcad, self.dtnas, self.senha)
+
+        messagebox.showinfo("Info!", "Usuário inserido com sucesso.")
+
     def valLogin(self):
         print("Valida login")
         self.user  = self.username.get()
@@ -31,13 +30,12 @@ class Banco(banco_de_dados):
             messagebox.showinfo("Info!", "Acesso Liberado...")
         elif self.resultado == 9:
             messagebox.showinfo("Alerta!", "Acesso Negado: Senha Incorreta.")
-            
+
 class Application(Colors, Banco):
     def __init__(self):
         self.root = root
         self.configTela()
         self.Login()
-        #self.Cadastro()
 
 
         root.mainloop()

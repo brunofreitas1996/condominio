@@ -21,6 +21,7 @@ class banco_de_dados():
             
         self.conn.commit()
         self.desconecta_bd()
+        
     def validaLogin(self, v_user, v_senha):
         self.conecta_bd()
 
