@@ -28,7 +28,15 @@ class banco_de_dados():
         self.v_result = self.cursor.var(int)
         self.cursor.callproc("condominio.pkg_login.prc_valida_login", [v_user, v_senha, self.v_result])
 
+        self.desconecta_bd()
+        return self.v_result.getvalue()
+    
+    def altSenha(self, v_cpf_cnpj, v_dt_nasc, v_nova_senha):
+        self.conecta_bd()
+        self.v_result = self.cursor.var(int)
+        self.cursor.callproc("condominio.pkg_login.prc_alt_senha",[v_cpf_cnpj, v_dt_nasc, v_nova_senha, self.v_result])
         self.conn.commit()
         self.desconecta_bd()
-
         return self.v_result.getvalue()
+
+        
