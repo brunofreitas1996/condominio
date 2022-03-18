@@ -1,6 +1,6 @@
 class Colors:
-    bg  = '#5CC6BA'#Azul claro
-    bg1 = '#FFFFFF'#Branco
-    #      '#A0A0A0'#Cinza claro
-    fgText = '#454848'#Cinza escuro
-    #      '#F1F5F4'#Branco gelo
+    bg  = '#2A2D40'
+    bg1 = '#BEC4D2'
+    fgText = '#2A2D40'
+    btnText = '#BEC4D2'
+

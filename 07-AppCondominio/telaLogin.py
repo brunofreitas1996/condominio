@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from turtle import fillcolor
 from BDconection import *
 from Colors import *
 
@@ -85,13 +86,13 @@ class Application(Colors, Banco):
         self.configTela()
         self.Login()
 
-        root.mainloop()
+        self.root.mainloop()
 
     def configTela(self):
         self.root.title('Condominio')
-        self.root.iconbitmap('images/icons/icon.ico')
         self.root.configure(bg=self.bg)
         self.root.resizable(False,False)
+        self.root.iconbitmap('images/icons/icon.ico')
         #dimensão da janela
         self.largura = 700
         self.altura  = 500
@@ -101,33 +102,38 @@ class Application(Colors, Banco):
         self.posix = (self.largura_screen/2) - (self.largura/2)
         self.posiy = (self.altura_screen/2) - (self.altura/2)
         self.root.geometry('{}x{}+{}+{}'.format(self.largura, self.altura, int(self.posix), int(self.posiy)))
-
+        
     def Login(self):
         self.frlogin = Frame(self.root, bd=1, bg=self.bg1)
         self.frlogin.place(relx=0.01, rely=0.01, relwidth=0.4, relheight=0.98)
+        self.canvas_user = Canvas(self.frlogin, bg=self.bg1, borderwidth=-2)
+        self.canvas_user.place(relx=0.002, rely=0.01, relwidth=0.99, relheight=0.98)
 
         #Caixas de entrada
 
         self.lblUser  = Label(self.frlogin, bg=self.bg1, text='Usuário', fg=self.fgText)
         self.lblUser.place(relx=0.10, rely=0.31)
-        self.canvas_user = Canvas(self.frlogin, bd=0, bg=self.bg)
-        self.canvas_user.place(relx=0.095, rely=0.384, relwidth=0.797, relheight=0.02)
-        self.username = Entry(self.frlogin, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 186, 245.4, 186]# pos_1 = x_esquerdo, pos_2= y_esquerco, pos_3= x_direito, pos_4= y_direito
+        self.canvas_user.create_line(self.posicao, fill=self.bg, width=5)
+        self.username = Entry(self.frlogin, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.username.place(relx=0.10, rely=0.35)
 
         self.lblPass = Label(self.frlogin, bg=self.bg1, text='Senha', fg=self.fgText)
         self.lblPass.place(relx=0.10, rely=0.43)
-        self.canvas_pass = Canvas(self.frlogin, bd=0, bg=self.bg)
-        self.canvas_pass.place(relx=0.095, rely=0.502, relwidth=0.797, relheight=0.02)
-        self.password = Entry(self.frlogin, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 244, 245.4, 244]
+        self.canvas_user.create_line(self.posicao, fill=self.bg, width=5)
+        self.password = Entry(self.frlogin, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.password.place(relx=0.10, rely=0.47)
 
-        self.btnCadastro = Button(master=self.frlogin,bd=0, text='Cadastrar',font=5, fg=self.fgText,bg=self.bg, width=10, command=self.Cadastro)
+        self.btnCadastro = Button(master=self.frlogin,bd=0, text='Cadastrar',font=5, fg=self.btnText,bg=self.bg, width=10, 
+                               activebackground=self.bg1, command=self.Cadastro)
         self.btnCadastro.place(relx=0.10, rely=0.59)
-        self.btnLogar = Button(master=self.frlogin,bd=0, text='Entrar',font=5, fg=self.fgText, bg=self.bg, width=10, command=self.valLogin)
+        self.btnLogar = Button(master=self.frlogin,bd=0, text='Entrar',font=5, fg=self.btnText, bg=self.bg, width=10,
+                               activebackground=self.bg1, command=self.valLogin)
         self.btnLogar.place(relx=0.54, rely=0.59)
 
-        self.recuperarsenha = Button(master=self.frlogin, text='Recuperar senha', bd=0, bg=self.bg1, fg=self.fgText, command=self.resetSenha)
+        self.recuperarsenha = Button(master=self.frlogin, text='Recuperar senha', bd=0, bg=self.bg1, fg=self.bg,
+                                     activebackground=self.bg1, command=self.resetSenha)
         self.recuperarsenha.place(relx=0.32, rely=0.70)
 
     def Cadastro(self):
@@ -136,35 +142,37 @@ class Application(Colors, Banco):
         #--
         self.frcadastro = Frame(self.root, bd=1, bg=self.bg1)
         self.frcadastro.place(relx=0.01, rely=0.01, relwidth=0.4, relheight=0.98)
+        self.canvas_cadastro = Canvas(self.frcadastro, bg=self.bg1, borderwidth=-2)
+        self.canvas_cadastro.place(relx=0.002, rely=0.01, relwidth=0.99, relheight=0.98)
 
         #Caixas de entrada
 
         self.lblNome  = Label(self.frcadastro, bg=self.bg1, text='Nome completo', fg=self.fgText)
         self.lblNome.place(relx=0.10, rely=0.07)
-        self.canvas_nome = Canvas(self.frcadastro, bd=0, bg=self.bg)
-        self.canvas_nome.place(relx=0.095, rely=0.145, relwidth=0.797, relheight=0.02)
-        self.innome = Entry(self.frcadastro, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 70, 245.4, 70]
+        self.canvas_cadastro.create_line(self.posicao, fill=self.bg, width=5)        
+        self.innome = Entry(self.frcadastro, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.innome.place(relx=0.10, rely=0.113)
         
         self.lblnrcad = Label(self.frcadastro, bg=self.bg1, text='CPF/CNPJ', fg=self.fgText)
         self.lblnrcad.place(relx=0.10, rely=0.19)
-        self.canvas_nrcad = Canvas(self.frcadastro, bd=0, bg=self.bg)
-        self.canvas_nrcad.place(relx=0.095, rely=0.265, relwidth=0.797, relheight=0.02)
-        self.innrcad = Entry(self.frcadastro, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 128, 245.4, 128]
+        self.canvas_cadastro.create_line(self.posicao, fill=self.bg, width=5)        
+        self.innrcad = Entry(self.frcadastro, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.innrcad.place(relx=0.10, rely=0.231)
 
         self.lbldtnasc  = Label(self.frcadastro, bg=self.bg1, text='Data nascimento', fg=self.fgText)
         self.lbldtnasc.place(relx=0.10, rely=0.31)
-        self.canvas_dtnasc = Canvas(self.frcadastro, bd=0, bg=self.bg)
-        self.canvas_dtnasc.place(relx=0.095, rely=0.384, relwidth=0.797, relheight=0.02)
-        self.indtnasc = Entry(self.frcadastro, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 186, 245.4, 186]# pos_1 = x_esquerdo, pos_2= y_esquerco, pos_3= x_direito, pos_4= y_direito
+        self.canvas_cadastro.create_line(self.posicao, fill=self.bg, width=5)
+        self.indtnasc = Entry(self.frcadastro, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.indtnasc.place(relx=0.10, rely=0.35)
 
         self.lblSenha = Label(self.frcadastro, bg=self.bg1, text='Senha', fg=self.fgText)
         self.lblSenha.place(relx=0.10, rely=0.43)
-        self.canvas_senha = Canvas(self.frcadastro, bd=0, bg=self.bg)
-        self.canvas_senha.place(relx=0.095, rely=0.502, relwidth=0.797, relheight=0.02)
-        self.insenha = Entry(self.frcadastro, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 244, 245.4, 244]
+        self.canvas_cadastro.create_line(self.posicao, fill=self.bg, width=5)
+        self.insenha = Entry(self.frcadastro, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.insenha.place(relx=0.10, rely=0.47)
 
         def voltalogin():
@@ -176,12 +184,15 @@ class Application(Colors, Banco):
                                          "Formato do campo: Data de nascimento:\n"+
                                          "DD/MM/YYYY = DIA/MÊS/ANO")
             
-        self.btnVoltar = Button(master=self.frcadastro,bd=0, text='Voltar',font=5, fg=self.fgText,bg=self.bg, width=10, command=voltalogin)
+        self.btnVoltar = Button(master=self.frcadastro,bd=0, text='Voltar',font=5, fg=self.btnText,bg=self.bg, width=10, 
+                                activebackground=self.bg1, command=voltalogin)
         self.btnVoltar.place(relx=0.10, rely=0.59)
-        self.btnCadastrar = Button(master=self.frcadastro,bd=0, text='Cadastrar',font=5, fg=self.fgText, bg=self.bg, width=10, command=self.insereUsuario)
+        self.btnCadastrar = Button(master=self.frcadastro,bd=0, text='Cadastrar',font=5, fg=self.btnText, bg=self.bg, width=10, 
+                                   activebackground=self.bg1, command=self.insereUsuario)
         self.btnCadastrar.place(relx=0.54, rely=0.59)
 
-        self.lblDuvida = Button(master=self.frcadastro, text='Dúvidas', bd=0, bg=self.bg1, fg=self.fgText, command=duvidas)
+        self.lblDuvida = Button(master=self.frcadastro, text='Dúvidas', bd=0, bg=self.bg1, fg=self.fgText,
+                                activebackground=self.bg1, command=duvidas)
         self.lblDuvida.place(relx=0.40, rely=0.70)
 
     def resetSenha(self):
@@ -190,37 +201,40 @@ class Application(Colors, Banco):
         #--  
         self.frresetSenha = Frame(self.root, bd=1, bg=self.bg1)
         self.frresetSenha.place(relx=0.01, rely=0.01, relwidth=0.4, relheight=0.98)
-
+        self.canvas_reset = Canvas(self.frresetSenha, bg=self.bg1, borderwidth=-2)
+        self.canvas_reset.place(relx=0.002, rely=0.01, relwidth=0.99, relheight=0.98)
         #Caixas de entrada
         
         self.lblaltnrcad = Label(self.frresetSenha, bg=self.bg1, text='CPF/CNPJ', fg=self.fgText)
         self.lblaltnrcad.place(relx=0.10, rely=0.19)
-        self.canvas_altnrcad = Canvas(self.frresetSenha, bd=0, bg=self.bg)
-        self.canvas_altnrcad.place(relx=0.095, rely=0.265, relwidth=0.797, relheight=0.02)
-        self.inaltnrcad = Entry(self.frresetSenha, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 128, 245.4, 128]
+        self.canvas_reset.create_line(self.posicao, fill=self.bg, width=5)        
+        self.inaltnrcad = Entry(self.frresetSenha, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.inaltnrcad.place(relx=0.10, rely=0.231)
 
         self.lblaltdtnasc  = Label(self.frresetSenha, bg=self.bg1, text='Data nascimento', fg=self.fgText)
         self.lblaltdtnasc.place(relx=0.10, rely=0.31)
-        self.canvas_altdtnasc = Canvas(self.frresetSenha, bd=0, bg=self.bg)
-        self.canvas_altdtnasc.place(relx=0.095, rely=0.384, relwidth=0.797, relheight=0.02)
-        self.inaltdtnasc = Entry(self.frresetSenha, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 186, 245.4, 186]
+        self.canvas_reset.create_line(self.posicao, fill=self.bg, width=5)        
+        self.inaltdtnasc = Entry(self.frresetSenha, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.inaltdtnasc.place(relx=0.10, rely=0.35)
 
         self.lblNovaSenha = Label(self.frresetSenha, bg=self.bg1, text='Nova Senha', fg=self.fgText)
         self.lblNovaSenha.place(relx=0.10, rely=0.43)
-        self.canvas_novasenha = Canvas(self.frresetSenha, bd=0, bg=self.bg)
-        self.canvas_novasenha.place(relx=0.095, rely=0.502, relwidth=0.797, relheight=0.02)
-        self.innovasenha = Entry(self.frresetSenha, bg=self.bg, fg=self.fgText, width=36,bd=0)
+        self.posicao = [27.2, 244, 245.4, 244]
+        self.canvas_reset.create_line(self.posicao, fill=self.bg, width=5)        
+        self.innovasenha = Entry(self.frresetSenha, bg=self.bg, fg=self.btnText, width=36,bd=0)
         self.innovasenha.place(relx=0.10, rely=0.47)
 
         def voltalogin():
             self.frresetSenha.destroy()
             self.Login()
             
-        self.btnVoltar = Button(master=self.frresetSenha,bd=0, text='Voltar',font=5, fg=self.fgText,bg=self.bg, width=10, command=voltalogin)
+        self.btnVoltar = Button(master=self.frresetSenha,bd=0, text='Voltar',font=5, fg=self.btnText,bg=self.bg, width=10, 
+                                activebackground=self.bg1, command=voltalogin)
         self.btnVoltar.place(relx=0.10, rely=0.59)
-        self.btnCadastrar = Button(master=self.frresetSenha,bd=0, text='Alterar',font=5, fg=self.fgText, bg=self.bg, width=10, command=self.alteraSenha)
+        self.btnCadastrar = Button(master=self.frresetSenha,bd=0, text='Alterar',font=5, fg=self.btnText, bg=self.bg, width=10, 
+                                   activebackground=self.bg1, command=self.alteraSenha)
         self.btnCadastrar.place(relx=0.54, rely=0.59)
 
 Application()
