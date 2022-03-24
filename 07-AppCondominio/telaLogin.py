@@ -88,7 +88,7 @@ class Banco(banco_de_dados, MenuApp):
                     elif self.resultado == 1:
                         messagebox.showinfo("Info!", "Acesso Liberado...")
                         self.frlogin.destroy()
-                        self.menu()
+                        self.menuTela()
 
                     elif self.resultado == 9:
                         messagebox.showinfo("Alerta!", "Acesso Negado: Senha Incorreta.")
@@ -117,7 +117,7 @@ class Banco(banco_de_dados, MenuApp):
             else:
                 messagebox.showinfo("Info!", "Senha alterada com sucesso.")
 
-class Application(Colors, Banco, Utils):
+class Application(Banco, Utils, Colors):
     def __init__(self):
         self.root = root
         self.configTela()
@@ -273,4 +273,19 @@ class Application(Colors, Banco, Utils):
                                    activebackground=self.bg1, command=self.alteraSenha)
         self.btnCadastrar.place(relx=0.54, rely=0.59)
 
+    def menuTela(self):
+    
+        self.menu1 = Frame(self.root,bd=1, bg=self.bg1)
+        self.menu1.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.98)
+        
+        self.bar = Menu(self.root)
+        self.root.config(menu=self.bar)
+        self.bar1 = Menu(self.bar)
+        self.bar2 = Menu(self.bar)
+
+        def quit(): self.root.destroy()
+
+        self.bar.add_cascade(label='Opções', menu=self.bar1)
+        self.bar.add_cascade(label='Sair', command=quit)
+        
 Application()
