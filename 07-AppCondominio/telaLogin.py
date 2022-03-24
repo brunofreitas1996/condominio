@@ -2,8 +2,6 @@ from tkinter import *
 from tkinter import messagebox
 from BDconection import *
 from Colors import *
-from Menu import MenuApp
-
 
 root = Tk()
 
@@ -22,7 +20,7 @@ class Utils():
         
         if self.indtnasc.get() != '': self.indtnasc.delete(0, 'end'); self.indtnasc.insert(0, self.new_text)
 
-class Banco(banco_de_dados, MenuApp):
+class Banco(banco_de_dados):
     def insereUsuario(self):
         self.nome  = self.innome.get()
         self.nrcad = self.innrcad.get()
@@ -122,6 +120,7 @@ class Application(Banco, Utils, Colors):
         self.root = root
         self.configTela()
         self.Login()
+        #self.menuTela()
 
         self.root.mainloop()
 
@@ -288,4 +287,12 @@ class Application(Banco, Utils, Colors):
         self.bar.add_cascade(label='Opções', menu=self.bar1)
         self.bar.add_cascade(label='Sair', command=quit)
         
+        self.photo = PhotoImage(file = r".\images\addApart.png")
+        self.photoimage = self.photo.subsample(1, 1)
+        self.btncadApartamento = Button(self.menu1,
+                                        image=self.photoimage, bg=self.bg,
+                                         text='Cadastrar Apartamento', 
+                                        bd=0, activebackground=self.bg1)
+        self.btncadApartamento.place(x=10, y=10, width=100, height=100)
+
 Application()
