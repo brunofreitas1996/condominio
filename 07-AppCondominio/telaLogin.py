@@ -119,8 +119,8 @@ class Application(Banco, Utils, Colors):
     def __init__(self):
         self.root = root
         self.configTela()
-        self.Login()
-        #self.menuTela()
+        #self.Login()
+        self.menuTela()
 
         self.root.mainloop()
 
@@ -287,8 +287,8 @@ class Application(Banco, Utils, Colors):
         self.bar.add_cascade(label='Opções', menu=self.bar1)
         self.bar.add_cascade(label='Sair', command=quit)
         
-        self.photo = PhotoImage(file = r".\images\addApart.png")
-        self.photoimage = self.photo.subsample(1, 1)
+        self.photo = PhotoImage(file = r".\images\btncadastroapartamento.png")
+        self.photoimage = self.photo.subsample(3, 3)
         self.btncadApartamento = Button(self.menu1,
                                         image=self.photoimage, bg=self.bg,
                                          text='Cadastrar Apartamento', 
