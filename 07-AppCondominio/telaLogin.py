@@ -1,5 +1,9 @@
 from tkinter import *
+from tkinter import ttk
 from tkinter import messagebox
+from turtle import bgcolor, color
+
+from click import style
 from BDconection import *
 from Colors import *
 
@@ -281,18 +285,113 @@ class Application(Banco, Utils, Colors):
         self.root.config(menu=self.bar)
         self.bar1 = Menu(self.bar)
         self.bar2 = Menu(self.bar)
+        self.bar3 = Menu(self.bar)
 
         def quit(): self.root.destroy()
 
-        self.bar.add_cascade(label='Opções', menu=self.bar1)
-        self.bar.add_cascade(label='Sair', command=quit)
+        self.bar.add_cascade(label='Cadastros', menu=self.bar1)
+        self.bar.add_cascade(label='Listas', menu=self.bar2)
+        self.bar.add_cascade(label='Sair', menu=self.bar3)
+
+        self.bar1.add_command(label='Cadastro apartamento')
+        self.bar1.add_command(label='Cadastro município')
+        self.bar1.add_command(label='Cadastro condomínio', command=self.cadCondominio)
+        self.bar1.add_command(label='Cadastro tab. genérica')
         
-        self.photo = PhotoImage(file = r".\images\btncadastroapartamento.png")
-        self.photoimage = self.photo.subsample(3, 3)
-        self.btncadApartamento = Button(self.menu1,
-                                        image=self.photoimage, bg=self.bg,
-                                         text='Cadastrar Apartamento', 
-                                        bd=0, activebackground=self.bg1)
-        self.btncadApartamento.place(x=10, y=10, width=100, height=100)
+        self.bar3.add_command(label='Sair', command=quit)        
+
+    def cadCondominio(self):
+        self.frcadcondominio = Frame(self.root,bd=1, bg=self.bg1)
+        self.frcadcondominio.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.98)
+        self.cvcadcondominio = Canvas(self.frcadcondominio, bg=self.bg1, borderwidth=-2)
+        self.cvcadcondominio.place(x=0.002, rely=0.01, relwidth=0.99, relheight=0.98)
+
+        self.style= ttk.Style()
+        self.style.theme_use('clam')
+        self.style.configure("TCombobox", fieldbackground= self.bg,foreground=self.btnText)
+        self.style.configure("Treeview", fieldbackground= self.bg,foreground=self.btnText)
+        self.style.configure("Vertical.TScrollbar", fieldbackground= self.bg,foreground=self.btnText)
+        
+
+        self.lblCabecalho = Label(self.frcadcondominio, fg=self.bg, bg=self.bg1, text='Cadastro de Condomínio')
+        self.lblCabecalho.place(x=10,y=10)
+        self.cvposicao = [10, 35, 670, 35]
+        self.cvcadcondominio.create_line(self.cvposicao, fill=self.bg, width=2)
+
+        self.lblcnpj = Label(self.frcadcondominio, text='CNPJ', fg=self.bg, bg=self.bg1)
+        self.lblcnpj.place(x=10, y=60)
+        self.entcnpj = Entry(self.frcadcondominio, width=20, bg=self.bg, fg=self.btnText).place(x=10,y=80)
+        self.pos_y_cnpj = 95
+        self.cvposicao = [10, self.pos_y_cnpj, 133, self.pos_y_cnpj]
+        self.cvcadcondominio.create_line(self.cvposicao, fill=self.bg, width=2)
+        
+        self.lblnome = Label(self.frcadcondominio, text='Nome', fg=self.bg, bg=self.bg1)
+        self.lblnome.place(x=150, y=60)
+        self.entnome = Entry(self.frcadcondominio, width=60, bg=self.bg, fg=self.btnText).place(x=150,y=80)
+        self.pos_y_nome = 95
+        self.cvposicao = [150, self.pos_y_nome, 513, self.pos_y_nome]
+        self.cvcadcondominio.create_line(self.cvposicao, fill=self.bg, width=2)        
+
+        self.lblnumero = Label(self.frcadcondominio, text='Nº', fg=self.bg, bg=self.bg1)
+        self.lblnumero.place(x=530, y=60)
+        self.entnumero = Entry(self.frcadcondominio, width=10, bg=self.bg, fg=self.btnText).place(x=530,y=80)
+
+        self.lblmunicipio = Label(self.frcadcondominio, text='Município', fg=self.bg, bg=self.bg1)
+        self.lblmunicipio.place(x=10, y=110)
+        self.cbmunicipio = ttk.Combobox(self.frcadcondominio, background=self.bg1,
+                            values=["1 valor","2  valor"])
+        self.cbmunicipio.set("-- Selecione --")
+        self.cbmunicipio.place(x=10, y=130)
+
+        self.lbllogradouro = Label(self.frcadcondominio, text='Logradouro', fg=self.bg, bg=self.bg1)
+        self.lbllogradouro.place(x=165, y=110)
+        self.entlogradouro = Entry(self.frcadcondominio, width=60, bg=self.bg, fg=self.btnText).place(x=165,y=130)
+
+        self.lbltipolog = Label(self.frcadcondominio, text='Tipo Log.', fg=self.bg, bg=self.bg1)
+        self.lbltipolog.place(x=540, y=110)
+        self.tipolog = ttk.Combobox(self.frcadcondominio, background=self.bg1,width=7,
+                            values=["Rua","Av."])
+        self.tipolog.set("...")
+        self.tipolog.place(x=540,y=130)
+
+        self.lblbairro = Label(self.frcadcondominio, text='Bairro', fg=self.bg, bg=self.bg1)
+        self.lblbairro.place(x=10, y=160)
+        self.entbairro = Entry(self.frcadcondominio, width=40, bg=self.bg, fg=self.btnText).place(x=10, y=180)
+
+        self.lblcep = Label(self.frcadcondominio, text='CEP', fg=self.bg, bg=self.bg1)
+        self.lblcep.place(x=270, y=160)
+        self.entcep = Entry(self.frcadcondominio, width=10, bg=self.bg, fg=self.btnText).place(x=270, y=180)
+
+        self.lbluf = Label(self.frcadcondominio, text='UF', fg=self.bg, bg=self.bg1)
+        self.lbluf.place(x=350, y=160)
+        self.entuf = Entry(self.frcadcondominio, width=3, bg=self.bg, fg=self.btnText).place(x=350, y=180)
+
+
+        self.btnCadastrar = Button(self.frcadcondominio, text='Cadastrar', bg=self.bg, fg=self.btnText).place(x=400,y=180)
+
+        self.btnAtualizar = Button(self.frcadcondominio, text='Atualizar', bg=self.bg, fg=self.btnText).place(x=480,y=180)
+
+        self.btnDeletar = Button(self.frcadcondominio, text='Deletar', bg=self.bg, fg=self.btnText).place(x=555,y=180)
+
+
+        self.listacondominio = ttk.Treeview(self.frcadcondominio, height=3, column=('col1','col2','col3','col4'))
+        self.listacondominio.heading('#0',text='')
+        self.listacondominio.heading('#1', text='CNPJ')
+        self.listacondominio.heading('#2', text='Nome')
+        self.listacondominio.heading('#3', text='Nº')
+        self.listacondominio.heading('#4', text='Endereço')
+
+        self.listacondominio.column('#0', width=1)
+        self.listacondominio.column('#1', width=50)
+        self.listacondominio.column('#2', width=100)
+        self.listacondominio.column('#3', width=30)
+        self.listacondominio.column('#4', width=200)
+
+        self.listacondominio.place(x=10, y=230, width=640, height=225)
+
+        self.scroollista = Scrollbar(self.frcadcondominio, orient='vertical')
+        self.listacondominio.configure(yscroll=self.scroollista.set)
+        self.scroollista.place(x=650, y=230, width=20, height=225)
+        #self.listacondominio.bind('<Double-1>', self.ondoubleclick)       
 
 Application()
